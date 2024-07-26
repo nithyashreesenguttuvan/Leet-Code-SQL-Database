@@ -1,0 +1,13 @@
+# Write your MySQL query statement below
+with Reordered as (
+    select 
+        case 
+            when id % 2 = 1 then id + 1
+            when id % 2 = 0 then id - 1
+        end as new_id,student from Seat
+),
+FinalOrder as (
+    select row_number() over (order by new_id) as id,student from Reordered
+)
+select id,student from FinalOrder
+order by id;

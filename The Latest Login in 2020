@@ -1,0 +1,19 @@
+# Write your MySQL query statement below
+WITH FilteredLogins AS (
+    SELECT 
+        user_id, 
+        time_stamp
+    FROM Logins
+    WHERE YEAR(time_stamp) = 2020
+),
+LatestLogins AS (
+    SELECT 
+        user_id, 
+        MAX(time_stamp) AS last_stamp
+    FROM FilteredLogins
+    GROUP BY user_id
+)
+SELECT 
+    user_id, 
+    last_stamp
+FROM LatestLogins;
